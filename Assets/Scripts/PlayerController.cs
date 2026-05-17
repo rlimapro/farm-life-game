@@ -30,6 +30,16 @@ public class PlayerController : MonoBehaviour
     {
         rigidBody.linearVelocity = moveInput.action.ReadValue<Vector2>().normalized * moveSpeed;
 
+        // virar o player
+        if(rigidBody.linearVelocity.x < 0f)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+        else if(rigidBody.linearVelocity.x > 0f)
+        {
+            transform.localScale = Vector3.one;
+        }
+
         anim.SetFloat("speed", rigidBody.linearVelocity.magnitude);
     }
 }
