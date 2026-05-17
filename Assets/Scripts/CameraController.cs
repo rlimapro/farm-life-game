@@ -4,9 +4,10 @@ public class CameraController : MonoBehaviour
 {
 
     private Transform target;
-    public Transform clampMin;
-    public Transform clampMax;
-    
+    public Transform clampMin, clampMax;
+    private Camera cam;
+    private float haldWidth, halfHeight;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,6 +16,12 @@ public class CameraController : MonoBehaviour
         // remove da herança da camera para não acompanhar seu movimento
         clampMin.SetParent(null);
         clampMax.SetParent(null);
+
+        cam = GetComponent<Camera>();
+
+        // enquadramento da camera
+        halfHeight = cam.orthographicSize;
+        haldWidth = cam.orthographicSize * cam.aspect;
     }
 
     // Update is called once per frame
@@ -25,8 +32,8 @@ public class CameraController : MonoBehaviour
         Vector3 clampedPosition = transform.position;
 
         // limita o movimento da câmera
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, clampMin.position.x, clampMax.position.x);
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, clampMin.position.y, clampMax.position.y);
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, clampMin.position.x + haldWidth, clampMax.position.x - haldWidth);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, clampMin.position.y + halfHeight, clampMax.position.y - halfHeight);
 
         transform.position = clampedPosition;
     }
