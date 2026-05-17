@@ -7,6 +7,17 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rigidBody;
     public float moveSpeed;
     public InputActionReference moveInput;
+    public Animator anim;
+
+    private void OnEnable()
+    {
+        moveInput.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveInput.action.Disable();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,5 +29,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         rigidBody.linearVelocity = moveInput.action.ReadValue<Vector2>().normalized * moveSpeed;
+
+        anim.SetFloat("speed", rigidBody.linearVelocity.magnitude);
     }
 }
