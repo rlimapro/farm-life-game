@@ -11,30 +11,32 @@ public class CameraController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        target = FindAnyObjectByType<PlayerController>().transform;
+        target = FindFirstObjectByType<PlayerController>().transform;
 
         // remove da herança da camera para não acompanhar seu movimento
-        clampMin.SetParent(null);
-        clampMax.SetParent(null);
+        if (clampMin != null) clampMin.SetParent(null);
+        if (clampMax != null) clampMax.SetParent(null);
 
         cam = GetComponent<Camera>();
-
-        // enquadramento da camera
-        halfHeight = cam.orthographicSize;
-        halfWidth = cam.orthographicSize * cam.aspect;
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+        if (target == null) return;
 
-        Vector3 clampedPosition = transform.position;
+        // enquadramento da camera (recalculado para suportar mudanças de resolução)
+        halfHeight = cam.orthographicSize;
+        halfWidth = cam.orthographicSize * cam.aspect;
 
-        // limita o movimento da câmera
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, clampMin.position.x + halfWidth, clampMax.position.x - halfWidth);
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, clampMin.position.y + halfHeight, clampMax.position.y - halfHeight);
+        Vector3 targetPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
 
-        transform.position = clampedPosition;
+        if (clampMin != null && clampMax != null)
+        {
+            // limita o movimento da câmera
+            targetPosition.x = Mathf.Clamp(targetPosition.x, clampMin.position.x + halfWidth, clampMax.position.x - halfWidth);
+            targetPosition.y = Mathf.Clamp(targetPosition.y, clampMin.position.y + halfHeight, clampMax.position.y - halfHeight);
+        }
+
+        transform.position = targetPosition;
     }
 }
