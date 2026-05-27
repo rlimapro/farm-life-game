@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        target = FindFirstObjectByType<PlayerController>().transform;
+        target = FindAnyObjectByType<PlayerController>().transform;
 
         // remove da herança da camera para não acompanhar seu movimento
         if (clampMin != null) clampMin.SetParent(null);
