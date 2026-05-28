@@ -22,17 +22,16 @@ public class GrowBlock : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AdvanceStage();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            AdvanceStage();
-            SetSoilSprite();
-        }
+        // if (Keyboard.current.eKey.wasPressedThisFrame)
+        // {
+        //     AdvanceStage();
+        //     SetSoilSprite();
+        // }
     }
 
     public void AdvanceStage()
@@ -53,6 +52,16 @@ public class GrowBlock : MonoBehaviour
         } else
         {
             theSR.sprite = soilTilled;
+        }
+    }
+
+    public void PloughSoil()
+    {
+        if(currentStage == GrowthStage.barren)
+        {
+            currentStage = GrowthStage.ploughed;
+
+            SetSoilSprite();
         }
     }
 

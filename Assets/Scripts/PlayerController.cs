@@ -6,17 +6,19 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rigidBody;
     public float moveSpeed;
-    public InputActionReference moveInput;
+    public InputActionReference moveInput, actionInput;
     public Animator anim;
 
     private void OnEnable()
     {
         moveInput.action.Enable();
+        actionInput.action.Enable();
     }
 
     private void OnDisable()
     {
         moveInput.action.Disable();
+        actionInput.action.Disable();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,6 +42,20 @@ public class PlayerController : MonoBehaviour
             transform.localScale = Vector3.one;
         }
 
+        if (actionInput.action.WasPressedThisFrame())
+        {
+            UseTool();
+        }
+
         anim.SetFloat("speed", rigidBody.linearVelocity.magnitude);
+    }
+
+    void UseTool()
+    {
+        GrowBlock block = null;
+
+        block = FindAnyObjectByType<GrowBlock>();
+
+        block.PloughSoil();
     }
 }
