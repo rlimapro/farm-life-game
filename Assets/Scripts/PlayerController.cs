@@ -52,6 +52,9 @@ public class PlayerController : MonoBehaviour
             transform.localScale = Vector3.one;
         }
 
+        bool hasSwitchedTool = false;
+
+        // mudar ferramenta
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
             currentTool++;
@@ -60,28 +63,39 @@ public class PlayerController : MonoBehaviour
             {
                 currentTool = ToolType.plough;
             }
-        }
 
+            hasSwitchedTool = true;
+        }
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             currentTool = ToolType.plough;
+            hasSwitchedTool = true;
         }
         if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             currentTool = ToolType.wateringCan;
+            hasSwitchedTool = true;
         }
         if (Keyboard.current.digit3Key.wasPressedThisFrame)
         {
             currentTool = ToolType.seeds;
+            hasSwitchedTool = true;
         }
         if (Keyboard.current.digit4Key.wasPressedThisFrame)
         {
             currentTool = ToolType.basket;
+            hasSwitchedTool = true;
         }
 
         if (actionInput.action.WasPressedThisFrame())
         {
             UseTool();
+            hasSwitchedTool = true;
+        }
+
+        if(hasSwitchedTool == true)
+        {
+            UIController.instance.SwitchTool((int) currentTool);
         }
 
         anim.SetFloat("speed", rigidBody.linearVelocity.magnitude);
@@ -92,8 +106,6 @@ public class PlayerController : MonoBehaviour
         GrowBlock block = null;
 
         block = FindAnyObjectByType<GrowBlock>();
-
-        // block.PloughSoil();
 
         if(block != null)
         {

@@ -9864,7 +9864,7 @@ GameObject:
   - component: {fileID: 1094608444}
   - component: {fileID: 1094608443}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10315,7 +10315,7 @@ MonoBehaviour:
   moveInput: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   actionInput: {fileID: 1120369429361536294, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   anim: {fileID: 1369436855}
-  currentTool: 1
+  currentTool: 0
 --- !u!70 &1320550059
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
