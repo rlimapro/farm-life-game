@@ -139,11 +139,11 @@ public class PlayerController : MonoBehaviour
 
                 case ToolType.seeds:
                     block.PlantCrop();
-                break;
+                    break;
 
                 case ToolType.basket:
-
-                break;
+                    block.HarvestCrop();
+                    break;
             }
         }
     }
