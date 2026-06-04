@@ -32,11 +32,15 @@ public class GrowBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (Keyboard.current.eKey.wasPressedThisFrame)
-        // {
-        //     AdvanceStage();
-        //     SetSoilSprite();
-        // }
+
+#if UNITY_EDITOR
+
+        if(Keyboard.current.nKey.wasPressedThisFrame)
+        {
+            AdvanceCrop();
+        }
+
+#endif
     }
 
     public void AdvanceStage()
@@ -112,6 +116,25 @@ public class GrowBlock : MonoBehaviour
             case GrowthStage.ripe:
                 cropSR.sprite = cropRipe;
                 break;
+        }
+    }
+
+    public void AdvanceCrop()
+    {
+        if(isWatered == true)
+        {
+            if(
+                currentStage == GrowthStage.planted  || 
+                currentStage == GrowthStage.growing1 || 
+                currentStage == GrowthStage.growing2
+            )
+            {
+                currentStage++;
+
+                isWatered = false;
+                SetSoilSprite();
+                UpdateCropSprite();
+            }
         }
     }
 }
