@@ -3,6 +3,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
+    private void Awake() {
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     public Rigidbody2D rigidBody;
     public float moveSpeed;
