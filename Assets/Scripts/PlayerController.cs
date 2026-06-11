@@ -5,9 +5,18 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
-    private void Awake() {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+    private void Awake() 
+    {
+    
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);    
+        } else
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     public Rigidbody2D rigidBody;
@@ -31,12 +40,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        if (instance != null && instance != this) return;
         moveInput.action.Enable();
         actionInput.action.Enable();
     }
 
     private void OnDisable()
     {
+        if (instance != this) return;
         moveInput.action.Disable();
         actionInput.action.Disable();
     }
